@@ -15,7 +15,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m MyACCOBot, your financial assistant. How can I help you analyze your financial data today?',
+      text: 'Hello! I\'m MYACCBOT, your financial assistant. How can I help you analyze your financial data today?',
       isUser: false,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
@@ -66,7 +66,6 @@ export default function ChatPage() {
               key={message.id}
               message={message.text}
               isUser={message.isUser}
-              timestamp={message.timestamp}
             />
           ))}
         </div>
