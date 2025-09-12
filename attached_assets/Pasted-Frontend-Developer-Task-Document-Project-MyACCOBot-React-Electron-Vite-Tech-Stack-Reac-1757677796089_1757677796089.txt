@@ -1,0 +1,219 @@
+Frontend Developer Task Document
+🚀 Project: MyACCOBot (React + Electron + Vite)
+🔧 Tech Stack
+
+React (with Vite)
+
+Electron (for bundling desktop app)
+
+Axios (for API calls)
+
+SCSS/CSS animations (for smooth transitions)
+
+Finance-themed UI (colors, logo, icons)
+
+🎯 Overview
+
+You are building the frontend only of a desktop-based AI chatbot app called MyACCOBot. This is a financial/accounting-focused assistant for internal teams. The chatbot does not store conversation history — every launch starts with a fresh chat screen.
+
+All API communications are handled through Axios and must be organized for easy scalability.
+
+🧠 Chatbot Behavior
+✅ On App Launch
+
+Show chat conversation UI immediately (no login, no intro page).
+
+Assume a stateless session — every launch starts fresh.
+
+🧾 Chat Input Requirements
+
+The chat input bar must include:
+
+A "+" icon on the right side.
+
+When clicked, show a dropdown menu with:
+
+📁 Browser
+
+🔗 Google Drive
+
+🔗 Google Drive Option
+
+On click:
+
+Just show a notification:
+"Google Drive support is coming soon!"
+
+Use a notification toast/snackbar (e.g. react-toastify, or custom).
+
+📁 Browser Option
+
+On click:
+
+Open Electron's internal file system dialog to select a folder (not a file).
+
+Ask the user to confirm:
+"We only support XML format files from this folder. Is that okay?"
+
+If confirmed:
+
+Send folder path to backend API:
+POST /path
+
+Use Axios for API call.
+
+Show a success/error notification based on response.
+
+🔗 API Integration Rules
+📁 Axios Setup
+
+All API requests must use axios.
+
+Create:
+
+utils/axiosInstance.ts: Axios base config
+
+services/apiService.ts: All API calls (like sendFolderPath)
+
+// utils/axiosInstance.ts
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:8000', // Electron backend
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export default axiosInstance;
+
+// services/apiService.ts
+import axiosInstance from '../utils/axiosInstance';
+
+export const sendFolderPath = async (folderPath: string) => {
+  return axiosInstance.post('/path', { path: folderPath });
+};
+
+💻 UI Design Guidance
+General
+
+Use finance/accounting-themed design:
+
+Professional but friendly
+
+Blue, green, or dark tones
+
+Use relevant icons for finance (charts, briefcase, money)
+
+Smooth transitions:
+
+Animate dropdowns and notifications (fade/slide)
+
+Use hover effects, transitions, etc.
+
+App Logo
+
+Design with a finance/accounting style.
+
+Logo text: MyACCOBot
+
+Add a small bot icon with accountant visuals (e.g. glasses, calculator)
+
+🧩 Component Breakdown
+🧠 ChatPage.tsx
+
+Main chatbot interface.
+
+Message list + input bar + "+" icon dropdown.
+
+Renders immediately on app load.
+
+➕ DropdownMenu.tsx
+
+Shows two options:
+
+Google Drive (🔗)
+
+Browser (📁)
+
+Use appropriate icons (Material Icons, HeroIcons, FontAwesome, etc.)
+
+📂 FileHandler.ts
+
+Uses Electron's IPC or window.electron to:
+
+Trigger folder picker dialog
+
+Get folder path
+
+Send to API if confirmed
+
+📦 Notification.tsx
+
+Toast/snackbar system for showing:
+
+Google Drive placeholder
+
+Success/error on folder path
+
+Any warnings
+
+🧱 Folder Structure (Frontend Only)
+my-accobot/
+├── public/
+│   └── logo.png
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── ChatPage.tsx
+│   │   ├── DropdownMenu.tsx
+│   │   ├── Notification.tsx
+│   ├── services/
+│   │   └── apiService.ts
+│   ├── utils/
+│   │   └── axiosInstance.ts
+│   ├── styles/
+│   │   └── animations.scss
+│   ├── App.tsx
+│   └── main.tsx
+├── electron/
+│   └── main.ts  // Electron Main Process
+├── package.json
+├── vite.config.ts
+└── electron-builder.json
+
+⚙️ Vite + Electron + Builder Setup (Frontend Only)
+
+Ensure your vite.config.ts and Electron main process file are set up to:
+
+Launch Electron with the React frontend
+
+Serve from local files (vite build output)
+
+Package everything using electron-builder
+
+npm run build          # Build React
+npm run electron:dev   # Run Electron with dev
+npm run dist           # Build installer with electron-builder
+
+📝 UX Notes
+
+Use CSS transitions (opacity, transform, height) for smooth UI.
+
+Keep interface clean, minimal distractions.
+
+Maintain a professional tone but with a helpful assistant feel.
+
+Confirmations and alerts should not block UI — use modals or snackbars.
+
+📌 Final Notes
+
+✅ Do not write backend code
+
+✅ Do not store any chat history
+
+✅ No external authentication or cloud integrations yet
+
+✅ All API logic via services/apiService.ts
+
+✅ Only folder selection — not individual file upload
