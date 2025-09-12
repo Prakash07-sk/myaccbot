@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import DropdownMenu from './DropdownMenu';
 
 interface ChatInputProps {
@@ -27,26 +26,30 @@ export default function ChatInput({ onSendMessage, onFolderSelected }: ChatInput
   };
 
   return (
-    <div className="border-t border-border bg-card p-4">
-      <div className="flex items-center gap-2 max-w-4xl mx-auto">
-        <Input
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="Ask me about your financial data..."
-          className="flex-1 bg-background border-input"
-          data-testid="input-chat"
-        />
-        <DropdownMenu onFolderSelected={onFolderSelected} />
-        <Button 
-          onClick={handleSend} 
-          size="icon"
-          disabled={!inputValue.trim()}
-          className="hover-elevate"
-          data-testid="button-send"
-        >
-          <Send className="w-4 h-4" />
-        </Button>
+    <div className="border-t border-border bg-card p-6 rounded-b-2xl">
+      <div className="max-w-4xl mx-auto">
+        <div className="relative flex items-center bg-background border border-input rounded-2xl pr-2 min-h-14">
+          <input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Ask me about your financial data..."
+            className="flex-1 px-4 py-4 bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground rounded-2xl"
+            data-testid="input-chat"
+          />
+          <div className="flex items-center gap-2">
+            <DropdownMenu onFolderSelected={onFolderSelected} />
+            <Button 
+              onClick={handleSend} 
+              size="icon"
+              disabled={!inputValue.trim()}
+              className="rounded-xl hover-elevate min-w-10 min-h-10"
+              data-testid="button-send"
+            >
+              <Send className="w-4 h-4 text-primary-foreground" />
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

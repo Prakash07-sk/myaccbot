@@ -55,9 +55,11 @@ export default function ChatPage() {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      <Header />
+      <div className="rounded-t-2xl overflow-hidden">
+        <Header />
+      </div>
       
-      <div className="flex-1 overflow-y-auto p-4 space-y-4" data-testid="chat-messages">
+      <div className="flex-1 overflow-y-auto p-6 space-y-2" data-testid="chat-messages">
         <div className="max-w-4xl mx-auto">
           {messages.map((message) => (
             <ChatMessage
@@ -70,10 +72,12 @@ export default function ChatPage() {
         </div>
       </div>
 
-      <ChatInput 
-        onSendMessage={handleSendMessage}
-        onFolderSelected={handleFolderSelected}
-      />
+      <div className="rounded-b-2xl overflow-hidden">
+        <ChatInput 
+          onSendMessage={handleSendMessage}
+          onFolderSelected={handleFolderSelected}
+        />
+      </div>
     </div>
   );
 }

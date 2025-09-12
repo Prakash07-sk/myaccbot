@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FolderOpen, Link2 } from 'lucide-react';
+import { FolderOpen, Link2, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { 
   DropdownMenu as DropdownMenuPrimitive, 
@@ -52,31 +52,31 @@ export default function DropdownMenu({ onFolderSelected }: DropdownMenuProps) {
         <Button 
           size="icon" 
           variant="ghost" 
-          className="text-muted-foreground hover-elevate"
+          className="rounded-xl hover-elevate min-w-10 min-h-10"
           data-testid="button-dropdown-trigger"
         >
-          <span className="text-lg">+</span>
+          <Plus className="w-4 h-4 text-emerald-500" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
         align="end" 
-        className="w-48 animate-in slide-in-from-top-2 duration-200"
+        className="w-48 rounded-xl animate-in slide-in-from-top-2 duration-200"
         data-testid="dropdown-content"
       >
         <DropdownMenuItem 
           onClick={handleBrowserClick}
-          className="cursor-pointer gap-2 hover-elevate"
+          className="cursor-pointer gap-3 hover-elevate rounded-lg m-1"
           data-testid="dropdown-item-browser"
         >
-          <FolderOpen className="w-4 h-4" />
-          <span>Browser</span>
+          <FolderOpen className="w-4 h-4 text-blue-500" />
+          <span>Browse Files</span>
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={handleGoogleDriveClick}
-          className="cursor-pointer gap-2 hover-elevate"
+          className="cursor-pointer gap-3 hover-elevate rounded-lg m-1"
           data-testid="dropdown-item-googledrive"
         >
-          <Link2 className="w-4 h-4" />
+          <Link2 className="w-4 h-4 text-green-500" />
           <span>Google Drive</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
