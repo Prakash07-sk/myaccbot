@@ -7,17 +7,14 @@ interface ChatMessageProps {
 export default function ChatMessage({ message, isUser, timestamp }: ChatMessageProps) {
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-6`}>
-      <div className={`max-w-xs lg:max-w-md px-5 py-4 ${
+      <div className={`${
         isUser 
-          ? 'bg-primary text-primary-foreground rounded-3xl rounded-br-lg' 
-          : 'bg-card border border-card-border text-card-foreground rounded-3xl rounded-bl-lg'
+          ? 'max-w-[50%] bg-primary/10 border border-primary/20 text-foreground px-5 py-4 rounded-3xl rounded-br-lg backdrop-blur-sm' 
+          : 'w-full text-foreground px-2 py-3'
       }`} data-testid={`message-${isUser ? 'user' : 'bot'}`}>
-        <p className="text-sm leading-relaxed">{message}</p>
-        {timestamp && (
-          <p className="text-xs opacity-70 mt-2" data-testid="text-timestamp">
-            {timestamp}
-          </p>
-        )}
+        <p className={`${
+          isUser ? 'text-sm leading-relaxed' : 'text-sm leading-relaxed'
+        }`}>{message}</p>
       </div>
     </div>
   );
