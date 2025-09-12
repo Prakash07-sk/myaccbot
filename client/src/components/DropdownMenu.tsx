@@ -24,16 +24,21 @@ export default function DropdownMenu({ onFolderSelected }: DropdownMenuProps) {
     const confirmed = window.confirm("We only support XML format files from this folder. Is that okay?");
     
     if (confirmed) {
-      // Mock folder path for demonstration
-      const mockFolderPath = "/Users/Desktop/financial-documents";
+      // Mock folder path for demonstration - use a more realistic path for testing
+      const mockFolderPath = process.env.NODE_ENV === 'development' ? './test-data' : "/Users/Desktop/financial-documents";
+      
+      console.log('Sending folder path:', mockFolderPath);
       
       try {
-        await sendFolderPath(mockFolderPath);
+        console.log('Making API call to /api/path...');
+        const response = await sendFolderPath(mockFolderPath);
+        console.log('API response:', response);
         toast.success('Folder path sent successfully!');
         onFolderSelected?.(mockFolderPath);
-      } catch (error) {
-        toast.error('Failed to send folder path');
-        console.error('API Error:', error);
+      } catch (error: any) {
+        console.error('API Error details:', error);
+        console.error('Error response:', error.response?.data);
+        toast.error('Failed to send folder path: ' + (error.response?.data?.error || error.message));
       }
     }
     

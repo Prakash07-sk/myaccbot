@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8000', // Electron backend
+  baseURL: '/api', // Relative path to backend API
   headers: {
     'Content-Type': 'application/json',
   },

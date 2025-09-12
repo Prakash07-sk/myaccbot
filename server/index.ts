@@ -1,10 +1,21 @@
 import express, { type Request, Response, NextFunction } from "express";
+import cors from "cors";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Configure CORS with restricted origins for security
+app.use(cors({
+  origin: process.env.NODE_ENV === 'development' 
+    ? ['http://localhost:5000', 'http://127.0.0.1:5000', 'http://0.0.0.0:5000']
+    : ['https://your-production-domain.com'], // Replace with actual production domain
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}));
 
 app.use((req, res, next) => {
   const start = Date.now();
