@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<expense_report period="2024-03">
+  <company>ACME Corporation</company>
+  <categories>
+    <travel>
+      <flights>2450.00</flights>
+      <hotels>1200.00</hotels>
+      <meals>890.00</meals>
+    </travel>
+    <office_supplies>
+      <software_licenses>3200.00</software_licenses>
+      <equipment>1850.00</equipment>
+      <stationery>320.00</stationery>
+    </office_supplies>
+    <utilities>
+      <electricity>450.00</electricity>
+      <internet>120.00</internet>
+      <phone>280.00</phone>
+    </utilities>
+  </categories>
+  <total_expenses>11010.00</total_expenses>
+</expense_report>

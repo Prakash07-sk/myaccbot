@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<financial_statement type="balance_sheet" period="2024-03-31">
+  <company>ACME Corporation</company>
+  <assets>
+    <current_assets>
+      <cash>125000.00</cash>
+      <accounts_receivable>89000.00</accounts_receivable>
+      <inventory>156000.00</inventory>
+    </current_assets>
+    <fixed_assets>
+      <equipment>240000.00</equipment>
+      <buildings>480000.00</buildings>
+      <less_depreciation>-85000.00</less_depreciation>
+    </fixed_assets>
+  </assets>
+  <liabilities>
+    <current_liabilities>
+      <accounts_payable>45000.00</accounts_payable>
+      <short_term_debt>25000.00</short_term_debt>
+    </current_liabilities>
+    <long_term_debt>180000.00</long_term_debt>
+  </liabilities>
+  <equity>
+    <common_stock>500000.00</common_stock>
+    <retained_earnings>255000.00</retained_earnings>
+  </equity>
+</financial_statement>

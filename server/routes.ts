@@ -50,14 +50,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Store the folder path
       await storage.storeFolderPath(folderPath);
 
-      // Scan for XML files
+      // Scan for XML files with detailed validation
       const xmlFiles = await storage.scanXMLFiles(folderPath);
+      const validFiles = xmlFiles.filter(file => file.isValid);
+      const invalidFiles = xmlFiles.filter(file => !file.isValid);
 
       res.json({ 
         success: true, 
-        message: `Folder path accepted. Found ${xmlFiles.length} XML files.`,
+        message: `Folder path accepted. Found ${xmlFiles.length} XML files (${validFiles.length} valid, ${invalidFiles.length} invalid).`,
         folderPath,
-        xmlFilesCount: xmlFiles.length
+        xmlFilesCount: xmlFiles.length,
+        validFilesCount: validFiles.length,
+        invalidFilesCount: invalidFiles.length,
+        files: xmlFiles.map(file => ({
+          fileName: file.fileName,
+          isValid: file.isValid,
+          documentType: file.documentType,
+          period: file.period,
+          company: file.company,
+          errors: file.errors
+        }))
       });
     } catch (error) {
       console.error("Error processing folder path:", error);

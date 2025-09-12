@@ -30,10 +30,27 @@ export const insertChatMessageSchema = chatMessageSchema.omit({ id: true });
 export type ChatMessage = z.infer<typeof chatMessageSchema>;
 export type InsertChatMessage = z.infer<typeof insertChatMessageSchema>;
 
+// XML file metadata schema
+export const xmlFileInfoSchema = z.object({
+  filePath: z.string(),
+  fileName: z.string(),
+  isValid: z.boolean(),
+  fileSize: z.number(),
+  lastModified: z.string(),
+  documentType: z.string().optional(), // e.g., "financial_statement", "expense_report"
+  period: z.string().optional(), // e.g., "2024-Q1", "2024-03-31"
+  company: z.string().optional(),
+  errors: z.array(z.string()).optional()
+});
+
+export type XMLFileInfo = z.infer<typeof xmlFileInfoSchema>;
+
 // Folder info schema
 export const folderInfoSchema = z.object({
   path: z.string(),
-  xmlFiles: z.array(z.string()),
+  xmlFiles: z.array(xmlFileInfoSchema),
+  validFileCount: z.number(),
+  invalidFileCount: z.number(),
   lastScanned: z.string(),
 });
 

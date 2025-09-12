@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<invalid_xml>
+  <unclosed_tag>
+  <another_tag>content
+  <!-- This file has invalid XML structure -->
+</invalid_xml>

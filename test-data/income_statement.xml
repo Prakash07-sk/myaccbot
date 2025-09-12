@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<financial_statement type="income_statement" period="2024-Q1">
+  <company>ACME Corporation</company>
+  <revenues>
+    <total>1250000.00</total>
+    <product_sales>980000.00</product_sales>
+    <service_revenue>270000.00</service_revenue>
+  </revenues>
+  <expenses>
+    <cost_of_goods_sold>620000.00</cost_of_goods_sold>
+    <operating_expenses>
+      <salaries>180000.00</salaries>
+      <rent>24000.00</rent>
+      <utilities>8500.00</utilities>
+      <marketing>45000.00</marketing>
+    </operating_expenses>
+  </expenses>
+  <net_income>372500.00</net_income>
+</financial_statement>
