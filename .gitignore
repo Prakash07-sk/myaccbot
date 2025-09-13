@@ -7,20 +7,22 @@ dist/
 .vite/
 *.log
 .local/
+release/
 
-# FastAPI (inside server folder)
-server/__pycache__/
-server/*.pyc
-server/*.pyo
-server/*.pyd
-server/.env
-server/.venv/
-server/venv/
-server/.mypy_cache/
-server/.pytest_cache/
-server/.DS_Store
+# FastAPI (inside Server folder)
+Server/__pycache__/
+Server/**/__pycache__/
+Server/**/*.pyc
+Server/**/*.pyo
+Server/**/*.pyd
+Server/.env
+Server/.venv/
+Server/venv/
+Server/.mypy_cache/
+Server/.pytest_cache/
+Server/.DS_Store
 
 # Other
-server/public
+Server/public
 vite.config.ts.*
 *.tar.gz
