@@ -11,8 +11,8 @@
     "email": "team@myaccobot.com"
   },
   "scripts": {
-    "install:server": "cd Server && source .venv/bin/activate && pip install -r requirements.txt",
-    "dev": "concurrently \"vite\" \"bash -c 'cd Server && source .venv/bin/activate && python main.py'\"",
+    "install:server": "cd Server && source venv/bin/activate && pip install -r requirements.txt",
+    "dev": "concurrently \"vite\" \"bash -c 'cd Server && source venv/bin/activate && python main.py'\"",
     "dev:electron": "concurrently \"vite\" \"wait-on http://localhost:5173 && NODE_ENV=development electron .\"",
     "build": "vite build",
     "build:electron": "npm run build && NODE_ENV=production electron-builder",

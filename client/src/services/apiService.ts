@@ -13,17 +13,18 @@ export const sendChatMessage = async (message: {
 }) => {
   
   try{
-    console.log('ApiService: Sending POST request to /api/chat with payload:', { message });
+    console.log('ApiService: Sending POST request to /api/chat/ with payload:', message);
     console.log('ApiService: Full URL will be:', Axios.defaults.baseURL + '/chat/');
     const response = await Axios.post('/chat/', message);
     console.log('ApiService: Response received:', response);
     if(response && response.data){
-      return response?.data;
+      return response.data;
     }
   }
   catch(error){
     console.error('ApiService: Error sending chat message:', error);
     console.error('ApiService: Error details:', error);
+    throw error; // Re-throw to let the calling code handle it
   }
   return null;
 };
