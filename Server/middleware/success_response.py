@@ -12,6 +12,7 @@ class SuccessResponseMiddleware:
         async def send_wrapper(message):
             if message["type"] == "http.response.start":
                 self._status = message["status"]
+                self._headers = dict(message.get("headers", []))
             if message["type"] == "http.response.body":
                 import json
                 try:
@@ -23,8 +24,12 @@ class SuccessResponseMiddleware:
                         and self._status < 400
                     ):
                         wrapped = SuccessResponse(data=body).dict()
+                        new_body = json.dumps(wrapped).encode()
                         message = dict(message)
-                        message["body"] = json.dumps(wrapped).encode()
+                        message["body"] = new_body
+                        # Update Content-Length header
+                        if "content-length" in self._headers:
+                            self._headers["content-length"] = str(len(new_body))
                 except Exception:
                     pass
             await send(message)

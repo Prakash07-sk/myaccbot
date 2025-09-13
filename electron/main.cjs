@@ -16,7 +16,10 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       enableRemoteModule: false,
-      preload: path.join(__dirname, 'preload.cjs')
+      preload: path.join(__dirname, 'preload.cjs'),
+      webSecurity: false, // Disable web security completely for CORS
+      allowRunningInsecureContent: true, // Allow insecure content
+      experimentalFeatures: true
     },
     icon: path.join(__dirname, '../dist/public/assets/MyACCOBot_finance-themed_logo_e4c31375-BmOcWdKO.png'),
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
@@ -33,6 +36,39 @@ function createWindow() {
     console.log('Loading URL:', devURL);
     console.log('Is dev mode:', isDev);
     console.log('NODE_ENV:', process.env.NODE_ENV);
+    
+    // Add debugging for network requests
+    mainWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
+      console.log('Request to:', details.url);
+      callback({});
+    });
+    
+    mainWindow.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
+      // Ensure Origin header is set for localhost requests
+      if (details.url.includes('localhost:8000')) {
+        details.requestHeaders['Origin'] = 'http://localhost:5173';
+        details.requestHeaders['Access-Control-Request-Method'] = details.method;
+        details.requestHeaders['Access-Control-Request-Headers'] = 'Content-Type';
+      }
+      console.log('Request headers:', details.requestHeaders);
+      callback({ requestHeaders: details.requestHeaders });
+    });
+    
+    mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+      console.log('Response headers for:', details.url);
+      console.log('Response headers:', details.responseHeaders);
+      
+      // Ensure CORS headers are present in response
+      if (details.url.includes('localhost:8000')) {
+        details.responseHeaders['Access-Control-Allow-Origin'] = ['*'];
+        details.responseHeaders['Access-Control-Allow-Methods'] = ['GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH'];
+        details.responseHeaders['Access-Control-Allow-Headers'] = ['*'];
+        details.responseHeaders['Access-Control-Allow-Credentials'] = ['true'];
+        details.responseHeaders['Access-Control-Expose-Headers'] = ['*'];
+      }
+      
+      callback({ responseHeaders: details.responseHeaders });
+    });
     
     mainWindow.loadURL(devURL);
     // Open DevTools in development only

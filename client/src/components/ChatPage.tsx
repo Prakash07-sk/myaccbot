@@ -27,7 +27,7 @@ export default function ChatPage() {
 
     const lastFiveMessages = messages.slice(-5)?.map(msg => ({
       role: msg.isUser ? 'user' : 'assistant',
-      content: msg.text
+      content: typeof msg.text === 'string' ? msg.text : JSON.stringify(msg.text)
     }));
 
     const getUserResponse = await sendChatMessage({
@@ -44,22 +44,22 @@ export default function ChatPage() {
 
     setMessages(prev => [...prev, userMessage]);
 
-    // todo: remove mock functionality - replace with real API call
-    setTimeout(() => {
+    // Handle the API response properly
+    if (getUserResponse) {
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: getUserResponse,
+        text: typeof getUserResponse === 'string' ? getUserResponse : getUserResponse.answer || 'Sorry, I couldn\'t process your request.',
         isUser: false,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, botResponse]);
-    }, 1000);
+    }
   };
 
   const handleFolderSelected = (folderPath: string) => {
     const systemMessage: Message = {
       id: Date.now().toString(),
-      text: `Folder selected: ${folderPath}. I'm ready to analyze your XML files from this location.`,
+      text: `✅ Data successfully stored from: ${folderPath}. I've processed your financial documents and I'm ready to help you analyze them. You can now start asking questions about your data!`,
       isUser: false,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };

@@ -18,18 +18,10 @@ class Config:
 		self.UI_HOST = os.getenv('VITE_UI_HOST', 'localhost')
 
 		# Allowed origins for CORS
-		self.ALLOWED_ORIGINS = [
-			f"http://{self.UI_HOST}:{self.UI_PORT}",
-			f"https://{self.UI_HOST}:{self.UI_PORT}",
-			# Electron origins
-			"http://localhost:5173",
-			"https://localhost:5173",
-			"file://",
-			"app://",
-			# For development
-			"http://localhost:3000",
-			"https://localhost:3000",
-		]
+		# Always allow all origins for now to fix Electron CORS issues
+		self.ALLOWED_ORIGINS = ["*"]
+		print(f"Backend running on: {self.BACKEND_HOST}:{self.BACKEND_PORT}")
+		print(f"CORS allowed origins: {self.ALLOWED_ORIGINS}")
 
 # Export a single config object
 config = Config()
