@@ -6,6 +6,7 @@ dist/
 .env.*
 .vite/
 *.log
+.local/
 
 # FastAPI (inside server folder)
 server/__pycache__/
