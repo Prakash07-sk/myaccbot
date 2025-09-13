@@ -18,43 +18,61 @@ export default function DropdownMenu({ onFolderSelected }: DropdownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleBrowserClick = async () => {
-  console.log("Browser option clicked");
+    console.log("Browser option clicked");
 
-  try {
-    let folderPath: string | null = null;
+    try {
+      let folderPath: string | null = null;
 
-    // ✅ Electron flow
-    if ((window as any).electron?.selectFolder) {
-      folderPath = await (window as any).electron.selectFolder();
+      // ✅ Electron flow - use the correct API
+      if ((window as any).electronAPI?.selectFolder) {
+        folderPath = await (window as any).electronAPI.selectFolder();
 
-      if (folderPath) {
-        // 👉 Just print the folder path
-        console.log("FOOOOOO", folderPath);
-      } else {
-        console.log("No folder selected");
-      }
-    } 
-    // ✅ Browser fallback
-    else {
-      const input = document.createElement("input");
-      input.type = "file";
-      (input as any).webkitdirectory = true;
-      input.onchange = (e: any) => {
-        const files = e.target.files;
-        if (files && files.length > 0) {
-          // Only print the top-level folder name
-          const folderName = files[0].webkitRelativePath.split("/")[0];
-          console.log("fileee", folderName);  // e.g. Document (not full path)
+        if (folderPath) {
+          console.log("Selected folder path:", folderPath); // Full absolute path like "C:/Documents/MyApp"
+          // Call the callback if provided
+          if (onFolderSelected) {
+            onFolderSelected(folderPath);
+          }
+        } else {
+          console.log("No folder selected");
         }
-      };
-      input.click();
+      } 
+      // ✅ Browser fallback - limited to relative paths for security
+      else {
+        const input = document.createElement("input");
+        input.type = "file";
+        (input as any).webkitdirectory = true;
+        input.onchange = (e: any) => {
+          const files = e.target.files;
+          if (files && files.length > 0) {
+            // Get the relative path of the selected folder
+            // The first file's webkitRelativePath includes the folder and file, e.g. "folder/sub/file.txt"
+            // To get the folder path, remove the file name from the first file's webkitRelativePath
+            const firstFilePath = files[0].webkitRelativePath;
+            const lastSlashIndex = firstFilePath.lastIndexOf('/');
+            let folderPath = '';
+            if (lastSlashIndex !== -1) {
+              folderPath = firstFilePath.substring(0, lastSlashIndex);
+            } else {
+              folderPath = firstFilePath; // fallback, should not happen
+            }
+            console.log("Selected folder (relative path):", folderPath); // e.g. "Document/subfolder"
+            console.log("Note: Browser cannot access full file system paths for security reasons");
+            
+            // Call the callback if provided
+            if (onFolderSelected) {
+              onFolderSelected(folderPath);
+            }
+          }
+        };
+        input.click();
+      }
+    } catch (error: any) {
+      console.error("Error while selecting folder:", error);
     }
-  } catch (error: any) {
-    console.error("Error while selecting folder:", error);
-  }
 
-  setIsOpen(false);
-};
+    setIsOpen(false);
+  };
 
 
   const handleGoogleDriveClick = () => {

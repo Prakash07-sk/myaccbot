@@ -1,10 +1,13 @@
 import axios from 'axios';
+import { API_BASE_URL } from './config';
 
-const axiosInstance = axios.create({
-  baseURL: '/api', // Relative path to backend API
+console.log('AxiosInstance: Configured API_BASE_URL:', API_BASE_URL);
+console.log('Vite env:', import.meta.env);
+const Axios = axios.create({
+  baseURL: API_BASE_URL, // Relative path to backend API
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-export default axiosInstance;
+export default Axios;

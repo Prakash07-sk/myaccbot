@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from './Header';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
+import { sendChatMessage } from '@/services/apiService';
 
 interface Message {
   id: string;
@@ -11,6 +12,7 @@ interface Message {
 }
 
 export default function ChatPage() {
+  console.log('ChatPage component is rendering');
   // todo: remove mock functionality - replace with real chat state management
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -21,7 +23,18 @@ export default function ChatPage() {
     }
   ]);
 
-  const handleSendMessage = (messageText: string) => {
+  const handleSendMessage = async (messageText: string) => {
+
+    const lastFiveMessages = messages.slice(-5)?.map(msg => ({
+      role: msg.isUser ? 'user' : 'assistant',
+      content: msg.text
+    }));
+
+    const getUserResponse = await sendChatMessage({
+      conversation_history: lastFiveMessages,
+      query: messageText
+    });
+
     const userMessage: Message = {
       id: Date.now().toString(),
       text: messageText,
@@ -35,7 +48,7 @@ export default function ChatPage() {
     setTimeout(() => {
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: `I received your message: "${messageText}". I would analyze this with your financial data once you upload XML files through the browser option.`,
+        text: getUserResponse,
         isUser: false,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
