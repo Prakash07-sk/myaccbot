@@ -18,32 +18,44 @@ export default function DropdownMenu({ onFolderSelected }: DropdownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleBrowserClick = async () => {
-    console.log('Browser option clicked');
-    
-    // Simulate folder dialog (in real Electron app, this would use window.electron)
-    const confirmed = window.confirm("We only support XML format files from this folder. Is that okay?");
-    
-    if (confirmed) {
-      // Mock folder path for demonstration - use a more realistic path for testing
-      const mockFolderPath = process.env.NODE_ENV === 'development' ? './test-data' : "/Users/Desktop/financial-documents";
-      
-      console.log('Sending folder path:', mockFolderPath);
-      
-      try {
-        console.log('Making API call to /api/path...');
-        const response = await sendFolderPath(mockFolderPath);
-        console.log('API response:', response);
-        toast.success('Folder path sent successfully!');
-        onFolderSelected?.(mockFolderPath);
-      } catch (error: any) {
-        console.error('API Error details:', error);
-        console.error('Error response:', error.response?.data);
-        toast.error('Failed to send folder path: ' + (error.response?.data?.error || error.message));
+  console.log("Browser option clicked");
+
+  try {
+    let folderPath: string | null = null;
+
+    // ✅ Electron flow
+    if ((window as any).electron?.selectFolder) {
+      folderPath = await (window as any).electron.selectFolder();
+
+      if (folderPath) {
+        // 👉 Just print the folder path
+        console.log("FOOOOOO", folderPath);
+      } else {
+        console.log("No folder selected");
       }
+    } 
+    // ✅ Browser fallback
+    else {
+      const input = document.createElement("input");
+      input.type = "file";
+      (input as any).webkitdirectory = true;
+      input.onchange = (e: any) => {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+          // Only print the top-level folder name
+          const folderName = files[0].webkitRelativePath.split("/")[0];
+          console.log("fileee", folderName);  // e.g. Document (not full path)
+        }
+      };
+      input.click();
     }
-    
-    setIsOpen(false);
-  };
+  } catch (error: any) {
+    console.error("Error while selecting folder:", error);
+  }
+
+  setIsOpen(false);
+};
+
 
   const handleGoogleDriveClick = () => {
     console.log('Google Drive option clicked');
@@ -74,7 +86,7 @@ export default function DropdownMenu({ onFolderSelected }: DropdownMenuProps) {
           data-testid="dropdown-item-browser"
         >
           <FolderOpen className="w-4 h-4 text-blue-500" />
-          <span>Browse Files</span>
+          <span>Browse Folder</span>
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={handleGoogleDriveClick}

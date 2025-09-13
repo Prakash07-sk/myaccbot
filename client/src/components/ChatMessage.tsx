@@ -23,12 +23,10 @@ export default function ChatMessage({ message, isUser, timestamp }: ChatMessageP
       )}
       <div className={`${
         isUser 
-          ? 'max-w-[50%] bg-primary/10 border border-primary/20 text-foreground px-5 py-4 rounded-3xl rounded-br-md backdrop-blur-sm' 
+          ? 'max-w-[50%] bg-primary/10 border text-foreground px-5 py-4 rounded-2xl backdrop-blur-sm' 
           : 'w-full text-foreground px-2 py-3'
       }`} data-testid={`message-${isUser ? 'user' : 'bot'}`}>
-        <p className={`${
-          isUser ? 'text-sm leading-relaxed' : 'text-sm leading-relaxed'
-        }`}>{message}</p>
+        <p className="text-sm leading-relaxed">{message}</p>
       </div>
     </div>
   );

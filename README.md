@@ -1,12 +1,75 @@
-# MYACCBOT - Financial Assistant Chatbot
+## MyACCOBot
 
-A professional React + Node.js desktop chatbot application designed for financial data analysis. MYACCBOT provides an intelligent interface for analyzing XML financial documents with a sleek, finance-themed UI featuring curved edges and light/dark theme support.
+### Introduction
+MyACCOBot is a modern, full-stack application designed to streamline accounting and financial operations. It features a FastAPI backend and a React-based frontend, providing a seamless experience for both developers and end-users.
 
-## Features
+---
 
-### 🤖 AI-Powered Financial Assistant
-- Interactive chat interface with MYACCBOT, your financial assistant
-- Real-time message processing and intelligent responses
+## Index
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Server Setup](#server-setup)
+- [Running Server and UI Together](#running-server-and-ui-together)
+
+---
+
+## Prerequisites
+
+You will need the following tools installed on your system:
+
+- Python 3.9+
+- Node.js (v18+ recommended)
+- npm (Node Package Manager)
+
+---
+
+## Server Setup (FastAPI Backend)
+
+The `Server` folder contains the FastAPI backend for MyACCOBot. To run the backend server separately:
+
+1. **Navigate to the Server folder:**
+  ```sh
+  cd Server
+  ```
+
+2. **(Optional but recommended) Create and activate a virtual environment:**
+  ```sh
+  python3 -m venv .venv
+  source .venv/bin/activate
+  ```
+
+3. **Install `uv` (a fast Python package installer and runner):**
+  ```sh
+  pip install uv
+  ```
+
+4. **Install all required Python packages:**
+  ```sh
+  uv pip install -r requirements.txt
+  ```
+
+5. **Run the FastAPI server:**
+  ```sh
+  python main.py
+  ```
+
+---
+
+## Running Server and UI Together
+
+To run both the backend server and the frontend UI at the same time:
+
+1. **Install npm dependencies (if not already done):**
+  ```sh
+  npm install
+  ```
+
+2. **Start both the server and UI concurrently:**
+  ```sh
+  npm run dev
+  ```
+
+This will launch both the FastAPI backend and the React frontend for development.
 - Professional finance/accounting themed conversations
 
 ### 📁 Advanced File System Integration
