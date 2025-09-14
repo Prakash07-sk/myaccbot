@@ -8,6 +8,7 @@ dist/
 *.log
 .local/
 release/
+data/
 
 # FastAPI (inside Server folder)
 Server/__pycache__/

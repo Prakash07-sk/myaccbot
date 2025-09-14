@@ -53,4 +53,7 @@ def api_test_post():
     return {"message": "API POST test successful"}
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host=config.BACKEND_HOST, port=config.BACKEND_PORT, reload=True)
+    # Disable reload in PyInstaller builds to prevent multiple processes
+    import sys
+    is_pyinstaller = getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS')
+    uvicorn.run("main:app", host=config.BACKEND_HOST, port=config.BACKEND_PORT, reload=not is_pyinstaller)
