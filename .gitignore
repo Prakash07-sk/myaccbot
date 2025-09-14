@@ -23,6 +23,8 @@ Server/.mypy_cache/
 Server/.pytest_cache/
 Server/.DS_Store
 Server/data/
+Server/build/
+Server/dist/
 
 # Other
 Server/public
