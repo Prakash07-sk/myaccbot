@@ -1,0 +1,21 @@
+FROM python:3.10-slim
+
+WORKDIR /model
+
+# System deps
+RUN apt-get update && apt-get install -y \
+    wget curl build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install llama.cpp bindings + server extras
+RUN pip install --no-cache-dir llama-cpp-python[server]
+
+# Download quantized Phi-2 model
+RUN mkdir -p /model/models \
+ && wget -O /model/models/phi-2.Q4_K_M.gguf \
+    https://huggingface.co/TheBloke/phi-2-GGUF/resolve/main/phi-2.Q4_K_M.gguf
+
+EXPOSE 9000
+
+# Run llama.cpp OpenAI-compatible API server
+CMD ["python", "-m", "llama_cpp.server", "--model", "/model/models/phi-2.Q4_K_M.gguf", "--host", "0.0.0.0", "--port", "9000"]

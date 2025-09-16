@@ -23,6 +23,12 @@ class Config:
 		print(f"Backend running on: {self.BACKEND_HOST}:{self.BACKEND_PORT}")
 		print(f"CORS allowed origins: {self.ALLOWED_ORIGINS}")
 
+		# LLM config
+		self.LLM_SERVER_HOST = os.getenv('VITE_LLM_SERVER_HOST', 'localhost')
+		self.LLM_SERVER_PORT = int(os.getenv('VITE_LLM_SERVER_PORT', 9000))
+		self.LLM_SERVER_API_ENDPOINT = os.getenv('VITE_LLM_SERVER_API_ENDPOINT', '/v1')
+		self.LLM_SERVER_MODEL = os.getenv('VITE_LLM_SERVER_MODEL', 'phi-2')
+
 # Export a single config object
 config = Config()
 
