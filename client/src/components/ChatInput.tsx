@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import DropdownMenu from './DropdownMenu';
+import { PRODUCT_INPUT_PLACEHOLDER } from '@/utils/config';
 
 interface ChatInputProps {
   onSendMessage?: (message: string) => void;
@@ -33,7 +34,7 @@ export default function ChatInput({ onSendMessage, onFolderSelected }: ChatInput
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask me about your financial data..."
+            placeholder={PRODUCT_INPUT_PLACEHOLDER}
             className="flex-1 px-4 py-4 bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground rounded-2xl"
             data-testid="input-chat"
           />

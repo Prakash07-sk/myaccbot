@@ -1,5 +1,6 @@
 import { Bot } from 'lucide-react';
 import logoImage from '@assets/generated_images/MyACCOBot_finance-themed_logo_e4c31375.png';
+import { PRODUCT_NAME } from '@/utils/config';
 
 interface ChatMessageProps {
   message: string;
@@ -12,11 +13,11 @@ export default function ChatMessage({ message, isUser, timestamp }: ChatMessageP
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-6`}>
       {!isUser && (
         <div className="flex-shrink-0 mr-3">
-          <div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
             <img 
               src={logoImage} 
-              alt="MYACCBOT" 
-              className="w-5 h-5 rounded-lg"
+              alt={PRODUCT_NAME} 
+              className="w-10 h-10 rounded-lg"
             />
           </div>
         </div>

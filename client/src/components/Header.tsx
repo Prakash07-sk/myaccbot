@@ -1,5 +1,6 @@
 import logoImage from '@assets/generated_images/MyACCOBot_finance-themed_logo_e4c31375.png';
 import ThemeToggle from './ThemeToggle';
+import { PRODUCT_NAME, PRODUCT_SUBTITLE } from '@/utils/config';
 
 export default function Header() {
   return (
@@ -7,17 +8,17 @@ export default function Header() {
       <div className="flex items-center gap-3">
         <img 
           src={logoImage} 
-          alt="MYACCBOT Logo" 
-          className="w-8 h-8 rounded-xl"
+          alt={PRODUCT_NAME} 
+          className="w-16 h-16 rounded-xl"
           data-testid="img-logo"
         />
         <h1 className="text-lg font-semibold text-foreground" data-testid="text-app-title">
-          MYACCBOT
+            {PRODUCT_NAME}
         </h1>
       </div>
       <div className="flex items-center gap-4">
         <div className="text-sm text-muted-foreground" data-testid="text-subtitle">
-          Financial Assistant
+            {PRODUCT_SUBTITLE}
         </div>
         <ThemeToggle />
       </div>
